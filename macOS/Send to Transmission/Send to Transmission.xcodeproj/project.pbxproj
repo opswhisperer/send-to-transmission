@@ -1,0 +1,611 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		90B96B9A304FB88A0067C033 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B96B99304FB88A0067C033 /* AppDelegate.swift */; };
+		90B96B9E304FB88A0067C033 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 90B96B9C304FB88A0067C033 /* Main.html */; };
+		90B96BA0304FB88A0067C033 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B96B9F304FB88A0067C033 /* Icon.png */; };
+		90B96BA2304FB88A0067C033 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BA1304FB88A0067C033 /* Style.css */; };
+		90B96BA4304FB88A0067C033 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BA3304FB88A0067C033 /* Script.js */; };
+		90B96BA6304FB88A0067C033 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B96BA5304FB88A0067C033 /* ViewController.swift */; };
+		90B96BA9304FB88A0067C033 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BA7304FB88A0067C033 /* Main.storyboard */; };
+		90B96BAB304FB88A0067C033 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BAA304FB88A0067C033 /* Assets.xcassets */; };
+		90B96BB2304FB88A0067C033 /* Send to Transmission Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 90B96BB1304FB88A0067C033 /* Send to Transmission Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		90B96BB7304FB88A0067C033 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B96BB6304FB88A0067C033 /* SafariWebExtensionHandler.swift */; };
+		90B96BCA304FB88A0067C033 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC3304FB88A0067C033 /* core.js */; };
+		90B96BCB304FB88A0067C033 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC4304FB88A0067C033 /* background.js */; };
+		90B96BCC304FB88A0067C033 /* panel.js in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC5304FB88A0067C033 /* panel.js */; };
+		90B96BCD304FB88A0067C033 /* panel.html in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC6304FB88A0067C033 /* panel.html */; };
+		90B96BCE304FB88A0067C033 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC7304FB88A0067C033 /* manifest.json */; };
+		90B96BCF304FB88A0067C033 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC8304FB88A0067C033 /* content.js */; };
+		90B96BD0304FB88A0067C033 /* panel.css in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC9304FB88A0067C033 /* panel.css */; };
+		AA0000000000000000000001 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000002 /* icons */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		90B96BB3304FB88A0067C033 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B96B8E304FB88A0067C033 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 90B96BB0304FB88A0067C033;
+			remoteInfo = "Send to Transmission Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		90B96BBE304FB88A0067C033 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				90B96BB2304FB88A0067C033 /* Send to Transmission Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		90B96B96304FB88A0067C033 /* Send to Transmission.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Send to Transmission.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		90B96B99304FB88A0067C033 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		90B96B9D304FB88A0067C033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		90B96B9F304FB88A0067C033 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		90B96BA1304FB88A0067C033 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		90B96BA3304FB88A0067C033 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		90B96BA5304FB88A0067C033 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		90B96BA8304FB88A0067C033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		90B96BAA304FB88A0067C033 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		90B96BAC304FB88A0067C033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90B96BB1304FB88A0067C033 /* Send to Transmission Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Send to Transmission Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		90B96BB6304FB88A0067C033 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		90B96BB8304FB88A0067C033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90B96BC3304FB88A0067C033 /* core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = core.js; path = ../../../Extension/core.js; sourceTree = "<group>"; };
+		90B96BC4304FB88A0067C033 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../../Extension/background.js; sourceTree = "<group>"; };
+		90B96BC5304FB88A0067C033 /* panel.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = panel.js; path = ../../../Extension/panel.js; sourceTree = "<group>"; };
+		90B96BC6304FB88A0067C033 /* panel.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = panel.html; path = ../../../Extension/panel.html; sourceTree = "<group>"; };
+		90B96BC7304FB88A0067C033 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../../Extension/manifest.json; sourceTree = "<group>"; };
+		90B96BC8304FB88A0067C033 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../../Extension/content.js; sourceTree = "<group>"; };
+		90B96BC9304FB88A0067C033 /* panel.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = panel.css; path = ../../../Extension/panel.css; sourceTree = "<group>"; };
+		AA0000000000000000000002 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../../Extension/icons; sourceTree = "<group>"; };
+		AA0000000000000000000003 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = ../../Config/Base.xcconfig; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		90B96B93304FB88A0067C033 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		90B96BAE304FB88A0067C033 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		90B96B8D304FB88A0067C033 = {
+			isa = PBXGroup;
+			children = (
+				90B96B98304FB88A0067C033 /* Send to Transmission */,
+				90B96BB5304FB88A0067C033 /* Send to Transmission Extension */,
+				AA0000000000000000000003 /* Base.xcconfig */,
+				90B96B97304FB88A0067C033 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		90B96B97304FB88A0067C033 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				90B96B96304FB88A0067C033 /* Send to Transmission.app */,
+				90B96BB1304FB88A0067C033 /* Send to Transmission Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		90B96B98304FB88A0067C033 /* Send to Transmission */ = {
+			isa = PBXGroup;
+			children = (
+				90B96B99304FB88A0067C033 /* AppDelegate.swift */,
+				90B96BA5304FB88A0067C033 /* ViewController.swift */,
+				90B96BA7304FB88A0067C033 /* Main.storyboard */,
+				90B96BAA304FB88A0067C033 /* Assets.xcassets */,
+				90B96BAC304FB88A0067C033 /* Info.plist */,
+				90B96B9B304FB88A0067C033 /* Resources */,
+			);
+			path = "Send to Transmission";
+			sourceTree = "<group>";
+		};
+		90B96B9B304FB88A0067C033 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				90B96B9C304FB88A0067C033 /* Main.html */,
+				90B96B9F304FB88A0067C033 /* Icon.png */,
+				90B96BA1304FB88A0067C033 /* Style.css */,
+				90B96BA3304FB88A0067C033 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		90B96BB5304FB88A0067C033 /* Send to Transmission Extension */ = {
+			isa = PBXGroup;
+			children = (
+				90B96BC2304FB88A0067C033 /* Resources */,
+				90B96BB6304FB88A0067C033 /* SafariWebExtensionHandler.swift */,
+				90B96BB8304FB88A0067C033 /* Info.plist */,
+			);
+			path = "Send to Transmission Extension";
+			sourceTree = "<group>";
+		};
+		90B96BC2304FB88A0067C033 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				90B96BC3304FB88A0067C033 /* core.js */,
+				AA0000000000000000000002 /* icons */,
+				90B96BC4304FB88A0067C033 /* background.js */,
+				90B96BC5304FB88A0067C033 /* panel.js */,
+				90B96BC6304FB88A0067C033 /* panel.html */,
+				90B96BC7304FB88A0067C033 /* manifest.json */,
+				90B96BC8304FB88A0067C033 /* content.js */,
+				90B96BC9304FB88A0067C033 /* panel.css */,
+			);
+			name = Resources;
+			path = "Send to Transmission Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		90B96B95304FB88A0067C033 /* Send to Transmission */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 90B96BBF304FB88A0067C033 /* Build configuration list for PBXNativeTarget "Send to Transmission" */;
+			buildPhases = (
+				90B96B92304FB88A0067C033 /* Sources */,
+				90B96B93304FB88A0067C033 /* Frameworks */,
+				90B96B94304FB88A0067C033 /* Resources */,
+				90B96BBE304FB88A0067C033 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				90B96BB4304FB88A0067C033 /* PBXTargetDependency */,
+			);
+			name = "Send to Transmission";
+			productName = "Send to Transmission";
+			productReference = 90B96B96304FB88A0067C033 /* Send to Transmission.app */;
+			productType = "com.apple.product-type.application";
+		};
+		90B96BB0304FB88A0067C033 /* Send to Transmission Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 90B96BBB304FB88A0067C033 /* Build configuration list for PBXNativeTarget "Send to Transmission Extension" */;
+			buildPhases = (
+				90B96BAD304FB88A0067C033 /* Sources */,
+				90B96BAE304FB88A0067C033 /* Frameworks */,
+				90B96BAF304FB88A0067C033 /* Resources */,
+			);
+			buildRules = (
+			);
+			name = "Send to Transmission Extension";
+			productName = "Send to Transmission Extension";
+			productReference = 90B96BB1304FB88A0067C033 /* Send to Transmission Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		90B96B8E304FB88A0067C033 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					90B96B95304FB88A0067C033 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					90B96BB0304FB88A0067C033 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+				};
+			};
+			buildConfigurationList = 90B96B91304FB88A0067C033 /* Build configuration list for PBXProject "Send to Transmission" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 90B96B8D304FB88A0067C033;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 90B96B97304FB88A0067C033 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				90B96B95304FB88A0067C033 /* Send to Transmission */,
+				90B96BB0304FB88A0067C033 /* Send to Transmission Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		90B96B94304FB88A0067C033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				90B96BA0304FB88A0067C033 /* Icon.png in Resources */,
+				90B96BA9304FB88A0067C033 /* Main.storyboard in Resources */,
+				90B96BA4304FB88A0067C033 /* Script.js in Resources */,
+				90B96B9E304FB88A0067C033 /* Main.html in Resources */,
+				90B96BAB304FB88A0067C033 /* Assets.xcassets in Resources */,
+				90B96BA2304FB88A0067C033 /* Style.css in Resources */,
+			);
+		};
+		90B96BAF304FB88A0067C033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				90B96BCF304FB88A0067C033 /* content.js in Resources */,
+				90B96BD0304FB88A0067C033 /* panel.css in Resources */,
+				90B96BCC304FB88A0067C033 /* panel.js in Resources */,
+				90B96BCD304FB88A0067C033 /* panel.html in Resources */,
+				90B96BCE304FB88A0067C033 /* manifest.json in Resources */,
+				90B96BCB304FB88A0067C033 /* background.js in Resources */,
+				90B96BCA304FB88A0067C033 /* core.js in Resources */,
+				AA0000000000000000000001 /* icons in Resources */,
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		90B96B92304FB88A0067C033 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				90B96BA6304FB88A0067C033 /* ViewController.swift in Sources */,
+				90B96B9A304FB88A0067C033 /* AppDelegate.swift in Sources */,
+			);
+		};
+		90B96BAD304FB88A0067C033 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				90B96BB7304FB88A0067C033 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		90B96BB4304FB88A0067C033 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 90B96BB0304FB88A0067C033 /* Send to Transmission Extension */;
+			targetProxy = 90B96BB3304FB88A0067C033 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		90B96B9C304FB88A0067C033 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				90B96B9D304FB88A0067C033 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		90B96BA7304FB88A0067C033 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				90B96BA8304FB88A0067C033 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		90B96BB9304FB88A0067C033 /* Debug configuration for PBXProject "Send to Transmission" */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA0000000000000000000003 /* Base.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		90B96BBA304FB88A0067C033 /* Release configuration for PBXProject "Send to Transmission" */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA0000000000000000000003 /* Base.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		90B96BBC304FB88A0067C033 /* Debug configuration for PBXNativeTarget "Send to Transmission Extension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Send to Transmission Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Send to Transmission Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your configured Transmission server to send torrent links and test its connection.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).SendToTransmission.Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		90B96BBD304FB88A0067C033 /* Release configuration for PBXNativeTarget "Send to Transmission Extension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Send to Transmission Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Send to Transmission Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your configured Transmission server to send torrent links and test its connection.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).SendToTransmission.Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		90B96BC0304FB88A0067C033 /* Debug configuration for PBXNativeTarget "Send to Transmission" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Send to Transmission/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Send to Transmission";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your configured Transmission server to send torrent links and test its connection.";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSViewGestureRecognizerIsExclusive = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).SendToTransmission";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		90B96BC1304FB88A0067C033 /* Release configuration for PBXNativeTarget "Send to Transmission" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Send to Transmission/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Send to Transmission";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your configured Transmission server to send torrent links and test its connection.";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSViewGestureRecognizerIsExclusive = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).SendToTransmission";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		90B96B91304FB88A0067C033 /* Build configuration list for PBXProject "Send to Transmission" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90B96BB9304FB88A0067C033 /* Debug configuration for PBXProject "Send to Transmission" */,
+				90B96BBA304FB88A0067C033 /* Release configuration for PBXProject "Send to Transmission" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		90B96BBB304FB88A0067C033 /* Build configuration list for PBXNativeTarget "Send to Transmission Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90B96BBC304FB88A0067C033 /* Debug configuration for PBXNativeTarget "Send to Transmission Extension" */,
+				90B96BBD304FB88A0067C033 /* Release configuration for PBXNativeTarget "Send to Transmission Extension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		90B96BBF304FB88A0067C033 /* Build configuration list for PBXNativeTarget "Send to Transmission" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90B96BC0304FB88A0067C033 /* Debug configuration for PBXNativeTarget "Send to Transmission" */,
+				90B96BC1304FB88A0067C033 /* Release configuration for PBXNativeTarget "Send to Transmission" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 90B96B8E304FB88A0067C033 /* Project object */;
+	validationLevel = 1;
+}

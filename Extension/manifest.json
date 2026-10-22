@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "Send to Transmission",
+  "version": "1.0.0",
+  "description": "Send magnet and torrent links to your Transmission server.",
+  "permissions": [
+    "nativeMessaging",
+    "contextMenus",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "core.js",
+      "background.js"
+    ]
+  },
+  "action": {
+    "default_popup": "panel.html",
+    "default_title": "Send to Transmission",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "options_ui": {
+    "page": "panel.html?settings=1"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "core.js",
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png",
+    "256": "icons/icon-256.png",
+    "512": "icons/icon-512.png"
+  }
+}

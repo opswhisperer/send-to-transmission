@@ -1,0 +1,11 @@
+// Copy to Config/Local.xcconfig (gitignored), or run scripts/configure.sh.
+
+// Apple Developer Team ID from developer.apple.com → Membership.
+DEVELOPMENT_TEAM = ABCDE12345
+CODE_SIGN_IDENTITY = Apple Development
+
+// A reverse-DNS prefix you control. Changing it creates a different app.
+BUNDLE_ID_PREFIX = com.yourname
+
+// Optional: keep an existing install's saved password after a rename.
+// TRANSMISSION_KEYCHAIN_SERVICE = com.yourname.SendToTransmission.rpc

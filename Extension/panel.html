@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Send to Transmission</title><link rel="stylesheet" href="panel.css"></head>
+<body>
+<main>
+  <header><span class="mark" aria-hidden="true">↗</span><div><h1>Send to Transmission</h1><p>Your links. Your server.</p></div></header>
+  <nav aria-label="Sections"><button id="sendTab" aria-pressed="true">Send a link</button><button id="settingsTab" aria-pressed="false">Settings</button><button id="helpTab" aria-pressed="false">Help</button></nav>
+  <section id="sendSection">
+    <p class="hint">For downloads from a website you’re logged into, right-click the download link and choose Send to Transmission. The URL does not need to end in .torrent.</p>
+    <form id="sendForm">
+      <label for="link">Magnet link or torrent URL</label><textarea id="link" rows="3" required placeholder="magnet:?xt=urn:btih:…" spellcheck="false"></textarea>
+      <label for="destination">Download directory</label><input id="destination" list="directories" placeholder="Use Transmission’s default" autocomplete="off"><datalist id="directories"></datalist>
+      <p class="hint">A path on your Transmission server, such as /downloads/movies.</p>
+      <label class="check"><input id="sendPaused" type="checkbox">Add paused</label>
+      <label class="check"><input id="sendImmediately" type="checkbox">Don’t show this page again</label>
+      <p class="hint">For normal captured clicks, send immediately using your saved defaults. Right-click sending always shows this page. Uncheck here to restore it.</p>
+      <button class="primary" id="sendButton" type="submit">Send to Transmission</button>
+    </form>
+  </section>
+  <section id="settingsSection" hidden>
+    <form id="settingsForm">
+      <div class="row"><div><label for="host">Server address</label><input id="host" placeholder="Hostname, IP, or https://server" required autocomplete="off"></div><div class="port"><label for="port">Port</label><input id="port" type="number" min="1" max="65535" required value="9091"></div></div>
+      <label class="check"><input id="ssl" type="checkbox">Use SSL / HTTPS</label>
+      <label for="path">RPC path</label><input id="path" value="/transmission/rpc" required>
+      <label class="check"><input id="auth" type="checkbox">Server requires login</label>
+      <div id="login" hidden><label for="username">Username</label><input id="username" autocomplete="username"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password"><p id="passwordHint" class="hint">Stored in macOS Keychain.</p></div>
+      <label for="defaultDirectory">Default download directory</label><input id="defaultDirectory" placeholder="Use Transmission’s default" list="directories">
+      <label class="check"><input id="paused" type="checkbox">Add paused by default</label>
+      <label class="check"><input id="intercept" type="checkbox">Send normal clicks on magnet / .torrent links</label>
+      <p class="hint">Click capture needs Safari website access. Modified clicks keep their usual behavior. Pasted URLs and ordinary click capture are fetched by your server. Right-click sending fetches same-site torrents using your Safari login; cookies stay in Safari.</p>
+      <div class="row"><button class="primary" type="submit">Save settings</button><button id="test" type="button">Save & test connection</button></div>
+    </form>
+  </section>
+  <section id="helpSection" hidden>
+    <h2>Get started</h2>
+    <p>In Settings, enter your Transmission server address, port and RPC path (usually /transmission/rpc). Enable HTTPS if your server uses it, and login if the RPC server requires it. Save &amp; test connection before sending links.</p>
+    <h2>Right-click a download link</h2>
+    <p>Choose <strong>Send to Transmission</strong> from the link’s context menu. The send page always opens so you can review the download directory and Add paused before pressing Send to Transmission.</p>
+    <p>For torrent files on the same website, this uses your logged-in Safari session. The link does not need to end in .torrent. The torrent file is sent to Transmission; your website cookies stay in Safari. Sign into the website first. Cross-site links and redirects are currently unsupported.</p>
+    <h2>Send with a normal click</h2>
+    <p>Enable <strong>Send normal clicks on magnet / .torrent links</strong> in Settings. Recognizable torrent and magnet links open the send page. Links with no recognizable torrent indicator still need right-click sending. Command, Shift and other modified clicks keep their normal behavior.</p>
+    <p>Check <strong>Don’t show this page again</strong> on the send page before sending to skip it for future normal captured clicks. Your saved directory and Add paused default are used. Right-click sending always lets you review first, even with this option enabled.</p>
+    <p>Normal click capture sends the URL to Transmission. For a torrent download requiring a website login, use right-click sending instead.</p>
+    <h2>Paste a link</h2>
+    <p>Open Send a link, paste a magnet link or public torrent URL, choose the options, then press Send to Transmission. Pasted URLs are fetched by your server and do not use Safari’s website login.</p>
+    <h2>Choose a directory</h2>
+    <p>Enter an absolute path on your Transmission server, such as /downloads/movies. Leave it blank to use Transmission’s default. Previously used directories appear as suggestions; this is not a browser for the server’s folders.</p>
+    <h2>Send notifications</h2>
+    <p>A notification appears at the top of the page after sending. Success notices stay for 10 seconds; errors stay until you close them or a new notification replaces them. The toolbar badge shows OK for success or ! for an error. It clears when you open this panel or after 30 seconds. The latest result remains here below the tabs.</p>
+    <h2>If something does not work</h2>
+    <p>Allow the extension access to the website in Safari and reload the page after updating the extension. Read the displayed error; login pages and non-torrent responses cannot be sent. Use Save &amp; test connection to check the RPC connection. HTTPS certificates must be trusted by your Mac.</p>
+  </section>
+  <p id="status" role="status" aria-live="polite"></p>
+  <footer>Downloads run on your Transmission server.</footer>
+</main><script src="core.js"></script><script src="panel.js"></script>
+</body></html>
