@@ -1,14 +1,8 @@
 build/
+/Send to Transmission.app
 .DS_Store
 xcuserdata/
 *.xcuserstate
-*.xcarchive
-*.dmg
-*.zip
-*.p8
-*.p12
-.env
-.env.*
 
 # Personal signing overlay (see docs/BUILDING.md)
 Config/Local.*

@@ -17,10 +17,10 @@ git clone https://github.com/opswhisperer/send-to-transmission.git
 cd send-to-transmission
 scripts/configure.sh --bundle-prefix com.yourname   # add --local if you have no developer account
 bash scripts/test.sh
-bash scripts/build.sh
+bash scripts/build.sh /Applications
 ```
 
-Open the built app once (in Xcode: Product → Show Build Folder in Finder, or just Run), then enable **Send to Transmission** in Safari → Settings → Extensions.
+`scripts/build.sh [DEST]` builds a Release copy and puts **Send to Transmission.app** in `DEST`, or in the repository folder when omitted. It replaces any previous copy there. Open the app once, then enable **Send to Transmission** in Safari → Settings → Extensions.
 
 ## How signing configuration works
 
@@ -69,7 +69,7 @@ To change teams, rerun `scripts/configure.sh --force …` instead.
 ## Building without a developer account
 
 1. `scripts/configure.sh --local --bundle-prefix com.yourname`. You can skip this: a fresh clone already builds ad-hoc as `com.example.*`.
-2. `bash scripts/build.sh`, then open the built app once.
+2. `bash scripts/build.sh /Applications`, then open the app once.
 3. In Safari → Settings → Advanced, enable **Show features for web developers** (older Safari: **Show Develop menu in menu bar**).
 4. Choose **Develop → Allow Unsigned Extensions**. Safari asks for your password and resets this every time it quits.
 5. Enable the extension in Safari → Settings → Extensions.
@@ -78,7 +78,7 @@ To change teams, rerun `scripts/configure.sh --force …` instead.
 
 1. Sign in under Xcode → Settings → Accounts so an Apple Development certificate exists.
 2. `scripts/configure.sh --bundle-prefix com.yourname`.
-3. `bash scripts/build.sh`, or Run in Xcode. Automatic signing registers the bundle IDs and creates provisioning profiles on the first build.
+3. `bash scripts/build.sh /Applications`, or Run in Xcode. Automatic signing registers the bundle IDs and creates provisioning profiles on the first build.
 
 Bundle IDs are unique across all Apple developer accounts. If a prefix belongs to another team, signing fails with "No profiles for … were found" or "… is not available"; choose a prefix you own.
 
@@ -100,7 +100,7 @@ Set `PLAYWRIGHT_PATH` if Playwright is not on Node's module path.
 
 **"Signing for … requires a development team."** The overlay sets `CODE_SIGN_IDENTITY = Apple Development` with an empty `DEVELOPMENT_TEAM`. Rerun `scripts/configure.sh --force` with `--team` or `--local`.
 
-**Two "Send to Transmission" entries in Safari.** Copies built in different folders each register an extension. Build in one place (`scripts/build.sh` uses Xcode's default DerivedData, the same as Run), or list and unregister the extras:
+**Two "Send to Transmission" entries in Safari.** Every copy of the app registers its own extension, e.g. one from `scripts/build.sh` and one from Xcode's Run. Keep one copy, or list and unregister the extras:
 
 ```sh
 pluginkit -mAvvv -p com.apple.Safari.web-extension | grep -A3 SendToTransmission

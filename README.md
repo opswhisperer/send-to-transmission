@@ -18,7 +18,7 @@ To build it yourself, see [docs/BUILDING.md](docs/BUILDING.md). The short versio
 ```sh
 scripts/configure.sh --bundle-prefix com.yourname          # with an Apple Developer account
 scripts/configure.sh --local --bundle-prefix com.yourname  # without one
-bash scripts/build.sh
+bash scripts/build.sh /Applications                       # or omit to build into the repo folder
 ```
 
 ## Configure
