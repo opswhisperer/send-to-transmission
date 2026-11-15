@@ -9,7 +9,7 @@ const assert = require('node:assert/strict');
   page.on('pageerror', error => errors.push(error.message));
   await page.addInitScript(() => {
     let settings = { host: 'transmission.example.com', port: 443, ssl: true, path: '/transmission/rpc', auth: false, username: '', directory: '', paused: false, askDirectory: true, recentDirectories: ['/complete', '/complete/linux'] };
-    const local = {}; window.testCalls = [];
+    const local = {}; window.testCalls = []; window.testLocal = local;
     window.browser = {
       runtime: { sendMessage: (payload, callback) => { window.badgeAcknowledged = payload.action === 'clearBadge'; callback({ ok: true }); }, sendNativeMessage: (_, payload, callback) => {
         if (window.nativeFailure === "missing") return callback(undefined);
@@ -20,7 +20,8 @@ const assert = require('node:assert/strict');
         if (payload.action === 'add') return callback({ ok: true, text: 'Added paused: Example Linux' });
         return callback({ ok: true, settings, hasPassword: false });
       } },
-      storage: { local: { get: async () => local, set: async values => Object.assign(local, values), remove: async () => {} } }
+      storage: { local: { get: async () => local, set: async values => Object.assign(local, values), remove: async () => {} } },
+      tabs: { query: async () => window.mockTab ? [window.mockTab] : [], sendMessage: (id, message, callback) => callback(window.mockLive ? { ok: true, enabled: true } : undefined), reload: async () => { window.reloaded = true; } }
     };
   });
   await page.goto(pathToFileURL(path.resolve('Extension/panel.html')).href);
@@ -40,7 +41,27 @@ const assert = require('node:assert/strict');
   assert.equal(await page.locator('#sendSection').isVisible(), false);
   await page.locator('#sendTab').click();
   await page.screenshot({ path: 'build/send-panel.png', fullPage: true });
+  assert.equal(await page.locator('#capture').isVisible(), false, 'no capture line outside the toolbar popup');
   await page.locator('#settingsTab').click();
+  // Click capture applies as soon as it is ticked and is saved natively, mirrored for content scripts.
+  await page.locator('#intercept').check();
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('Click capture turned on'));
+  assert.equal(await page.evaluate(() => window.testCalls.at(-1).settings.intercept), true);
+  assert.equal(await page.evaluate(() => window.testLocal.intercept), true);
+  // Over a web page, the popup reports whether capture is working there.
+  for (const [tab, live, expected] of [[{ id: 1, url: '' }, false, 'has not allowed'], [{ id: 1, url: 'https://example.com/' }, false, 'opened before'], [{ id: 1, url: 'https://example.com/' }, true, 'working on this page']]) {
+    await page.evaluate(([tab, live]) => { window.mockTab = tab; window.mockLive = live; return showCapture(); }, [tab, live]);
+    assert.ok((await page.locator('#captureText').textContent()).includes(expected), expected);
+  }
+  await page.evaluate(() => { window.mockLive = false; return showCapture(); });
+  await page.locator('#captureButton').click();
+  await page.waitForFunction(() => window.reloaded === true);
+  await page.locator('#intercept').uncheck();
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('Click capture turned off'));
+  assert.ok((await page.locator('#captureText').textContent()).includes('Click capture is off'));
+  await page.locator('#captureButton').click();
+  await page.waitForFunction(() => document.querySelector('#intercept').checked);
+  await page.evaluate(() => { window.mockTab = null; });
   await page.locator('#host').fill('https://transmission.example.com');
   await page.locator('#auth').check();
   await page.locator('#username').fill('test');
@@ -63,5 +84,5 @@ const assert = require('node:assert/strict');
   }
   assert.deepEqual(errors, []);
   await browser.close();
-  console.log('PASS: popup send, directory/paused payload, settings, test, password clearing, light/dark render (mock native bridge)');
+  console.log('PASS: popup send, directory/paused payload, settings, click-capture toggle and page status, test, password clearing, light/dark render (mock native bridge)');
 })().catch(error => { console.error(error); process.exit(1); });

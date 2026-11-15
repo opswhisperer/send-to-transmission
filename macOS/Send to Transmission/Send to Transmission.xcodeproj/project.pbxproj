@@ -25,6 +25,8 @@
 		90B96BCF304FB88A0067C033 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC8304FB88A0067C033 /* content.js */; };
 		90B96BD0304FB88A0067C033 /* panel.css in Resources */ = {isa = PBXBuildFile; fileRef = 90B96BC9304FB88A0067C033 /* panel.css */; };
 		AA0000000000000000000001 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000002 /* icons */; };
+		BB0000000000000000000001 /* TransmissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000003 /* TransmissionService.swift */; };
+		BB0000000000000000000002 /* TransmissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000003 /* TransmissionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +73,10 @@
 		90B96BC8304FB88A0067C033 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../../Extension/content.js; sourceTree = "<group>"; };
 		90B96BC9304FB88A0067C033 /* panel.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = panel.css; path = ../../../Extension/panel.css; sourceTree = "<group>"; };
 		AA0000000000000000000002 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../../Extension/icons; sourceTree = "<group>"; };
-		AA0000000000000000000003 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = ../../Config/Base.xcconfig; sourceTree = SOURCE_ROOT; };
+		BB0000000000000000000003 /* TransmissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransmissionService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000004 /* Send to Transmission.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Send to Transmission.entitlements"; sourceTree = "<group>"; };
+		BB0000000000000000000005 /* Send to Transmission Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Send to Transmission Extension.entitlements"; sourceTree = "<group>"; };
+		CC0000000000000000000001 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = ../../Config/Base.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,9 +98,18 @@
 			children = (
 				90B96B98304FB88A0067C033 /* Send to Transmission */,
 				90B96BB5304FB88A0067C033 /* Send to Transmission Extension */,
-				AA0000000000000000000003 /* Base.xcconfig */,
+				BB0000000000000000000006 /* Shared */,
+				CC0000000000000000000001 /* Base.xcconfig */,
 				90B96B97304FB88A0067C033 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		BB0000000000000000000006 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000003 /* TransmissionService.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		90B96B97304FB88A0067C033 /* Products */ = {
@@ -115,6 +129,7 @@
 				90B96BA7304FB88A0067C033 /* Main.storyboard */,
 				90B96BAA304FB88A0067C033 /* Assets.xcassets */,
 				90B96BAC304FB88A0067C033 /* Info.plist */,
+				BB0000000000000000000004 /* Send to Transmission.entitlements */,
 				90B96B9B304FB88A0067C033 /* Resources */,
 			);
 			path = "Send to Transmission";
@@ -137,6 +152,7 @@
 				90B96BC2304FB88A0067C033 /* Resources */,
 				90B96BB6304FB88A0067C033 /* SafariWebExtensionHandler.swift */,
 				90B96BB8304FB88A0067C033 /* Info.plist */,
+				BB0000000000000000000005 /* Send to Transmission Extension.entitlements */,
 			);
 			path = "Send to Transmission Extension";
 			sourceTree = "<group>";
@@ -265,12 +281,14 @@
 			files = (
 				90B96BA6304FB88A0067C033 /* ViewController.swift in Sources */,
 				90B96B9A304FB88A0067C033 /* AppDelegate.swift in Sources */,
+				BB0000000000000000000001 /* TransmissionService.swift in Sources */,
 			);
 		};
 		90B96BAD304FB88A0067C033 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
 				90B96BB7304FB88A0067C033 /* SafariWebExtensionHandler.swift in Sources */,
+				BB0000000000000000000002 /* TransmissionService.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
@@ -305,7 +323,7 @@
 /* Begin XCBuildConfiguration section */
 		90B96BB9304FB88A0067C033 /* Debug configuration for PBXProject "Send to Transmission" */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA0000000000000000000003 /* Base.xcconfig */;
+			baseConfigurationReference = CC0000000000000000000001 /* Base.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -369,7 +387,7 @@
 		};
 		90B96BBA304FB88A0067C033 /* Release configuration for PBXProject "Send to Transmission" */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA0000000000000000000003 /* Base.xcconfig */;
+			baseConfigurationReference = CC0000000000000000000001 /* Base.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -426,8 +444,9 @@
 		90B96BBC304FB88A0067C033 /* Debug configuration for PBXNativeTarget "Send to Transmission Extension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Send to Transmission Extension/Send to Transmission Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -461,8 +480,9 @@
 		90B96BBD304FB88A0067C033 /* Release configuration for PBXNativeTarget "Send to Transmission Extension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Send to Transmission Extension/Send to Transmission Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -498,12 +518,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Send to Transmission/Send to Transmission.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Send to Transmission/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Send to Transmission";
@@ -528,7 +550,6 @@
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -540,12 +561,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Send to Transmission/Send to Transmission.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Send to Transmission/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Send to Transmission";
@@ -570,7 +593,6 @@
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;

@@ -2,12 +2,16 @@
     -webkit-user-select: none;
     -webkit-user-drag: none;
     cursor: default;
+    box-sizing: border-box;
 }
 
 :root {
     color-scheme: light dark;
 
     --spacing: 20px;
+    --muted: #647b7d;
+    --error: #ae352f;
+    --accent: #14796b;
 }
 
 html {
@@ -28,6 +32,20 @@ body {
     text-align: center;
 }
 
+section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+body.sending #setup,
+body:not(.sending) #send,
+[hidden] {
+    display: none !important;
+}
+
 body:not(.state-on, .state-off) :is(.state-on, .state-off) {
     display: none;
 }
@@ -40,6 +58,83 @@ body.state-off :is(.state-on, .state-unknown) {
     display: none;
 }
 
+h1 {
+    margin: 0;
+    font-size: 1.15em;
+    overflow-wrap: anywhere;
+}
+
+p {
+    margin: 0;
+}
+
+hr {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    margin: 4px 0;
+}
+
+.hint {
+    font-size: 0.85em;
+    color: var(--muted);
+}
+
+form {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-weight: 600;
+}
+
+input:not([type=checkbox]) {
+    font: inherit;
+    width: 100%;
+    padding: 6px 8px;
+    cursor: text;
+    -webkit-user-select: text;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+}
+
+.check input {
+    accent-color: var(--accent);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+}
+
 button {
     font-size: 1em;
+}
+
+#status {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+}
+
+.error {
+    color: var(--error);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --muted: #a0b8b1;
+        --error: #ffa398;
+    }
 }

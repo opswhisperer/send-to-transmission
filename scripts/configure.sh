@@ -16,12 +16,17 @@ your Apple Developer account. Nothing tracked by Git is modified.
 
   --team ID              Ten-character Team ID. Detected from your Apple
                          Development certificates when omitted.
-  --local                No developer account: "Sign to Run Locally". Safari
-                         then needs Develop → Allow Unsigned Extensions.
+  --local                Ad-hoc signing, for checking that the project compiles.
+                         macOS will not launch the result: running the app
+                         requires an Apple Developer account.
   --bundle-prefix PREFIX Reverse-DNS prefix you control, e.g. com.yourname.
                          Defaults to the existing overlay's value.
   --keychain-service S   Keychain service name for the RPC password.
                          Defaults to PREFIX.SendToTransmission.rpc.
+  --legacy-keychain-service S
+                         Service name an earlier build saved the password under;
+                         the extension moves it on first run. Defaults to the
+                         existing overlay's value.
   --list-teams           Print teams found in your keychain and exit.
   --show                 Print the effective signing settings and exit.
   --force                Overwrite an existing Config/Local.xcconfig.
@@ -59,13 +64,14 @@ read_setting() {
 
 show() {
     xcodebuild -project "$PROJECT" -scheme "Send to Transmission" -configuration Debug -showBuildSettings 2>/dev/null |
-        awk '/^ +(DEVELOPMENT_TEAM|CODE_SIGN_IDENTITY|PRODUCT_BUNDLE_IDENTIFIER|TRANSMISSION_KEYCHAIN_SERVICE) = / && !seen[$0]++ { sub(/^ +/, ""); print }'
+        awk '/^ +(DEVELOPMENT_TEAM|CODE_SIGN_IDENTITY|PRODUCT_BUNDLE_IDENTIFIER|TRANSMISSION_KEYCHAIN_SERVICE|TRANSMISSION_LEGACY_KEYCHAIN_SERVICE) = / && !seen[$0]++ { sub(/^ +/, ""); print }'
 }
 
 TEAM=""
 LOCAL_SIGNING=false
 PREFIX=""
 SERVICE=""
+LEGACY_SERVICE=""
 FORCE=false
 while (($#)); do
     case "$1" in
@@ -73,6 +79,7 @@ while (($#)); do
         --local) LOCAL_SIGNING=true ;;
         --bundle-prefix) PREFIX="${2:-}"; shift ;;
         --keychain-service) SERVICE="${2:-}"; shift ;;
+        --legacy-keychain-service) LEGACY_SERVICE="${2:-}"; shift ;;
         --list-teams) list_teams; exit 0 ;;
         --show) show; exit 0 ;;
         --force) FORCE=true ;;
@@ -87,6 +94,7 @@ if [[ -f "$LOCAL" && $FORCE == false ]]; then
 fi
 
 PREFIX="${PREFIX:-$(read_setting BUNDLE_ID_PREFIX "$LOCAL")}"
+LEGACY_SERVICE="${LEGACY_SERVICE:-$(read_setting TRANSMISSION_LEGACY_KEYCHAIN_SERVICE "$LOCAL")}"
 [[ -n "$PREFIX" ]] || die "pass --bundle-prefix, e.g. --bundle-prefix com.yourname."
 [[ "$PREFIX" =~ ^[A-Za-z][A-Za-z0-9-]*(\.[A-Za-z0-9-]+)+$ ]] || die "bundle prefix must be reverse-DNS, e.g. com.yourname."
 [[ "$PREFIX" != com.example ]] || die "choose a bundle prefix you control instead of com.example."
@@ -123,6 +131,7 @@ fi
     fi
     echo "BUNDLE_ID_PREFIX = $PREFIX"
     [[ -z "$SERVICE" ]] || echo "TRANSMISSION_KEYCHAIN_SERVICE = $SERVICE"
+    [[ -z "$LEGACY_SERVICE" ]] || echo "TRANSMISSION_LEGACY_KEYCHAIN_SERVICE = $LEGACY_SERVICE"
 } > "$LOCAL"
 echo "Wrote Config/Local.xcconfig"
 

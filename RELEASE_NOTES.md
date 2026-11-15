@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- The app now opens `magnet:` links and `.torrent` files and sends them to the configured server, so links the Safari extension cannot see (private windows, pages without website access, links opened by scripts, other apps) no longer fall to another program. It shows which app owns magnet links and can make itself the default.
+- Settings move to an app group and the password to a shared Keychain group so the app and extension use the same server; both are migrated the first time the updated extension runs. **Building now requires an Apple Developer account**, because macOS grants those groups only to team-signed builds.
+- Click capture is saved with the native settings (shared by all Safari profiles, kept across reinstalls), applies as soon as it is ticked, and its state is shown in the toolbar popup with buttons to turn it on, allow website access, or reload the page.
+- Clicking a captured link shows a notice immediately. A background page that is not answering is reported within 5 seconds rather than after 45.
+- Capture every magnet link, including numbered topics (`xt.1`) and hash-less magnets that name a torrent file (`xs`); explain malformed ones on the page. Capture image-map and SVG links and links in `about:blank` frames.
+- Normal clicks now send same-site torrent downloads whose address has no `.torrent` in it, when the link describes itself as a torrent download.
+- A `.torrent` link from another website to a private-network address always opens the send page.
+- Register the context menu on every background start.
+- Fix: saved settings were discarded if a newer version added a setting. Fix: changing the server with a blank password stored an empty password and reported it as saved. Fix: the native request could outlast the scripts' timeouts and report a timeout for a send that succeeded.
+
 ## 1.0
 
 First public release.

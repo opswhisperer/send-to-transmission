@@ -10,10 +10,34 @@
     <script src="../Script.js" defer></script>
 </head>
 <body>
-    <img src="../Icon.png" width="128" height="128" alt="Send to Transmission Icon">
-    <p class="state-unknown">You can turn on Send to Transmission’s extension in Safari Extensions preferences.</p>
-    <p class="state-on">Send to Transmission’s extension is currently on. You can turn it off in Safari Extensions preferences.</p>
-    <p class="state-off">Send to Transmission’s extension is currently off. You can turn it on in Safari Extensions preferences.</p>
-    <button class="open-preferences">Quit and Open Safari Extensions Preferences…</button>
+    <img src="../Icon.png" width="96" height="96" alt="Send to Transmission Icon">
+
+    <section id="send">
+        <h1 id="name"></h1>
+        <p id="more" class="hint"></p>
+        <form id="review" hidden>
+            <label for="directory">Download directory</label>
+            <input id="directory" list="recent" placeholder="Use Transmission’s default" autocomplete="off" spellcheck="false">
+            <datalist id="recent"></datalist>
+            <p class="hint">A path on your Transmission server, such as /downloads/movies.</p>
+            <label class="check"><input id="paused" type="checkbox">Add paused</label>
+            <label class="check"><input id="remember" type="checkbox">Don’t show this again</label>
+            <p class="hint">Later links are sent straight away using the defaults saved in the Safari extension’s Settings.</p>
+            <div class="buttons"><button id="cancel" type="button">Cancel</button><button class="primary" type="submit">Send to Transmission</button></div>
+        </form>
+        <p id="status" role="status" aria-live="polite"></p>
+        <div class="buttons"><button id="retry" hidden>Try again</button><button id="skip" hidden>Next link</button><button id="done" hidden>Done</button></div>
+    </section>
+
+    <section id="setup">
+        <p class="state-unknown">You can turn on Send to Transmission’s extension in Safari Extensions preferences.</p>
+        <p class="state-on">Send to Transmission’s extension is currently on. You can turn it off in Safari Extensions preferences.</p>
+        <p class="state-off">Send to Transmission’s extension is currently off. You can turn it on in Safari Extensions preferences.</p>
+        <button class="open-preferences">Quit and Open Safari Extensions Preferences…</button>
+        <hr>
+        <p id="handlerText"></p>
+        <p class="hint">As the magnet link app, Send to Transmission also catches links from private windows, other browsers and other apps.</p>
+        <button id="makeDefault" hidden>Open magnet links with Send to Transmission</button>
+    </section>
 </body>
 </html>

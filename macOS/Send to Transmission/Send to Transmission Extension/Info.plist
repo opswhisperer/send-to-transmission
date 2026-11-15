@@ -16,5 +16,7 @@
 	</dict>
 	<key>TransmissionKeychainService</key>
 	<string>$(TRANSMISSION_KEYCHAIN_SERVICE)</string>
+	<key>TransmissionLegacyKeychainService</key>
+	<string>$(TRANSMISSION_LEGACY_KEYCHAIN_SERVICE)</string>
 </dict>
 </plist>

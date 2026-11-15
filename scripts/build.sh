@@ -12,9 +12,16 @@ PRODUCTS=build/DerivedData/Build/Products/Release
 APP="Send to Transmission.app"
 EXTENSION="Send to Transmission Extension.appex"
 
-xcodebuild -project 'macOS/Send to Transmission/Send to Transmission.xcodeproj' \
+PROJECT='macOS/Send to Transmission/Send to Transmission.xcodeproj'
+
+# An ad-hoc build cannot launch (see docs/BUILDING.md), so stop before producing one.
+TEAM="$(xcodebuild -project "$PROJECT" -scheme 'Send to Transmission' -configuration Release -showBuildSettings 2>/dev/null |
+  awk '/^ +DEVELOPMENT_TEAM = / { print $3; exit }')"
+[[ -n "$TEAM" ]] || { echo "Error: no development team is configured. An Apple Developer account is required; run scripts/configure.sh (see docs/BUILDING.md)." >&2; exit 1; }
+
+xcodebuild -project "$PROJECT" \
   -scheme 'Send to Transmission' -configuration Release -destination 'generic/platform=macOS' \
-  -derivedDataPath build/DerivedData -quiet build
+  -derivedDataPath build/DerivedData -allowProvisioningUpdates -quiet build
 
 # Unregister the intermediate copies so Safari only sees the installed app.
 "$LSREGISTER" -u "$PRODUCTS/$APP" 2>/dev/null || true

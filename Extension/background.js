@@ -1,6 +1,22 @@
 async function native(message) {
   return TransmissionCore.requestNative(browser, message);
 }
+// Click capture is saved with the native settings, which outlive Safari's extension storage and are shared by
+// every Safari profile. Content scripts cannot reach the native handler, so the value is mirrored into
+// storage.local each time this page starts and whenever a page asks for it.
+async function syncCapture() {
+  const { settings } = await native({ action: 'getSettings' });
+  let intercept = settings.intercept;
+  if (typeof intercept !== 'boolean') {
+    // Versions before 1.1 kept the choice only in storage.local; adopt it once.
+    const stored = (await browser.storage.local.get('intercept')).intercept;
+    intercept = stored === true;
+    if (typeof stored === 'boolean') await native({ action: 'saveSettings', settings: { intercept } });
+  }
+  await browser.storage.local.set({ intercept });
+  return intercept;
+}
+syncCapture().catch(() => {});
 const badgeAlarm = 'clear-result-badge';
 let badgeTimer;
 let badgeQueue = Promise.resolve();
@@ -53,15 +69,24 @@ async function sendLink(link, metainfo, review = false) {
   await rememberResult(result.text);
   return result;
 }
+let menuQueue = Promise.resolve();
 function registerMenu() {
-  // Callback sequencing ensures removal has finished before creation in Safari.
-  browser.contextMenus.removeAll(() => {
-    if (browser.runtime.lastError) return;
-    browser.contextMenus.create({ id: 'send', title: 'Send to Transmission', contexts: ['link'] });
-  });
+  // Queued so overlapping calls cannot create the item twice; removal must finish before creation in Safari.
+  menuQueue = menuQueue.then(() => new Promise(resolve => {
+    browser.contextMenus.removeAll(() => {
+      if (browser.runtime.lastError) return resolve();
+      browser.contextMenus.create({ id: 'send', title: 'Send to Transmission', contexts: ['link'] }, () => {
+        void browser.runtime.lastError;
+        resolve();
+      });
+    });
+  }));
 }
+// The listeners make Safari load this page at install and launch. Safari does not fire them reliably after
+// an update, so the menu is also registered every time the page starts.
 browser.runtime.onInstalled.addListener(registerMenu);
 browser.runtime.onStartup.addListener(registerMenu);
+registerMenu();
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== 'send') return;
   try {
@@ -69,7 +94,8 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
     else {
       if (tab?.id == null) throw new Error('Open the download page in a Safari tab first.');
       await new Promise((resolve, reject) => {
-        const timer = setTimeout(() => reject(new Error('The download page did not respond within 60 seconds. Reload it and try again.')), 60000);
+        // Longer than the page's own limits: 10 seconds to fetch the file plus 65 to send it.
+        const timer = setTimeout(() => reject(new Error('The download page did not respond within 80 seconds. Reload it and try again.')), 80000);
         browser.tabs.sendMessage(tab.id, { action: 'fetchTorrentLink', link: info.linkUrl }, { frameId: info.frameId ?? 0 }, reply => {
           clearTimeout(timer);
           if (browser.runtime.lastError) reject(new Error('Could not contact the download page: ' + browser.runtime.lastError.message + ' Reload the page after updating; check Safari website access if this persists.'));
@@ -90,7 +116,14 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     clearBadge().then(() => sendResponse({ ok: true }), error => sendResponse({ ok: false, error: error.message }));
     return true;
   }
-  if (message.action !== 'captureLink' || !sender.tab) return false;
+  if (!sender.tab) return false;
+  // Content scripts check that this page is awake before waiting on a send.
+  if (message.action === 'ping') { sendResponse({ ok: true }); return false; }
+  if (message.action === 'captureSetting') {
+    syncCapture().then(intercept => sendResponse({ ok: true, intercept }), error => sendResponse({ ok: false, error: error.message }));
+    return true;
+  }
+  if (message.action !== 'captureLink') return false;
   sendLink(message.link, message.metainfo, message.review === true)
     .then(result => sendResponse({ ok: true, text: result.text }))
     .catch(async error => {

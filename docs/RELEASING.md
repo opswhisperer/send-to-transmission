@@ -1,6 +1,6 @@
 # Releasing
 
-Anyone can build from source (see [BUILDING.md](BUILDING.md)). A ready-to-run download must be signed with a **Developer ID Application** certificate and notarized by Apple, or Gatekeeper blocks it and Safari only loads it with Allow Unsigned Extensions. That requires a paid Apple Developer Program membership.
+Anyone with an Apple Developer account can build from source (see [BUILDING.md](BUILDING.md)). A ready-to-run download must be signed with a **Developer ID Application** certificate and notarized by Apple, or Gatekeeper blocks it and Safari only loads it with Allow Unsigned Extensions. That requires a paid Apple Developer Program membership.
 
 ## One-time setup
 

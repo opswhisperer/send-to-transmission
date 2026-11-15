@@ -7,5 +7,8 @@ CODE_SIGN_IDENTITY = Apple Development
 // A reverse-DNS prefix you control. Changing it creates a different app.
 BUNDLE_ID_PREFIX = com.yourname
 
-// Optional: keep an existing install's saved password after a rename.
+// Optional: use a different Keychain service name for the RPC password.
 // TRANSMISSION_KEYCHAIN_SERVICE = com.yourname.SendToTransmission.rpc
+
+// Optional: adopt a password saved under an older service name.
+// TRANSMISSION_LEGACY_KEYCHAIN_SERVICE = com.oldname.SendToTransmission.rpc

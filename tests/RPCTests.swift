@@ -15,8 +15,14 @@ final class MockRPC: URLProtocol, @unchecked Sendable {
     }
     override func stopLoading() {}
 }
-func expect(_ condition: @autoclosure () -> Bool, _ message: String) throws {
-    if !condition() { throw ExtensionFailure("TEST FAILED: " + message) }
+final class StalledRPC: URLProtocol, @unchecked Sendable {
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {}
+    override func stopLoading() {}
+}
+func expect(_ condition: @autoclosure () throws -> Bool, _ message: String) throws {
+    if try !condition() { throw ExtensionFailure("TEST FAILED: " + message) }
 }
 func body(_ request: URLRequest) throws -> [String: Any] {
     if let data = request.httpBody { return try JSONSerialization.jsonObject(with: data) as! [String: Any] }
@@ -30,7 +36,11 @@ func body(_ request: URLRequest) throws -> [String: Any] {
     static func main() async throws {
         var settings = ServerSettings(); settings.host = "127.0.0.1"
         if CommandLine.arguments.contains("--live") {
-            settings.host = "transmission.example.com"; settings.port = 443; settings.ssl = true
+            // Read-only check against a real server: TRANSMISSION_LIVE_HOST=server.example.com rpc-tests --live
+            guard let host = ProcessInfo.processInfo.environment["TRANSMISSION_LIVE_HOST"], !host.isEmpty else {
+                throw ExtensionFailure("Set TRANSMISSION_LIVE_HOST to the HTTPS hostname of a Transmission server.")
+            }
+            settings.host = host; settings.port = 443; settings.ssl = true
             let response = try await TransmissionClient(settings: settings, password: nil).rpc("session-get", arguments: ["fields": ["version", "rpc-version", "download-dir"]])
             print("Live native RPC:", response)
             return
@@ -98,6 +108,33 @@ func body(_ request: URLRequest) throws -> [String: Any] {
             do { try TransmissionClient.validateLink(invalid); throw ExtensionFailure("Unexpected success") }
             catch { try expect(!error.localizedDescription.contains("Unexpected success"), "invalid link rejected") }
         }
+        let numbered = "magnet:?xt.1=urn:btih:0123456789012345678901234567890123456789"
+        try expect(try TransmissionClient.validateLink(numbered) == numbered, "numbered magnet topic accepted unchanged")
+        MockRPC.handler = { request in
+            let args = try body(request)["arguments"] as! [String: Any]
+            try expect(args["filename"] as? String == "https://example.com/a.torrent", "hash-less magnet sends its torrent URL")
+            return (200, [:], ["result": "success", "arguments": ["torrent-added": ["name": "a"]]])
+        }
+        _ = try await client().add(link: "magnet:?xs=https%3A%2F%2Fexample.com%2Fa.torrent", directory: "", paused: false)
+        MockRPC.handler = { request in
+            let args = try body(request)["arguments"] as! [String: Any]
+            try expect(args["metainfo"] as? String == metainfo && args["filename"] == nil, "local torrent file needs no link")
+            return (200, [:], ["result": "success", "arguments": ["torrent-added": ["name": "demo"]]])
+        }
+        _ = try await client().add(link: "", directory: "", paused: false, metainfo: metainfo)
+        do { _ = try await client().add(link: "", directory: "", paused: false); throw ExtensionFailure("Unexpected success") }
+        catch { try expect(!error.localizedDescription.contains("Unexpected success"), "empty link without a file rejected") }
+        // Settings saved by an older version lack newer keys and must keep every value they do have.
+        let older = try JSONDecoder().decode(ServerSettings.self, from: Data(#"{"host":"nas.local","port":443,"ssl":true,"askDirectory":false}"#.utf8))
+        try expect(older.host == "nas.local" && older.port == 443 && older.ssl && !older.askDirectory && older.path == "/transmission/rpc" && older.intercept == nil, "older settings decode with defaults")
+        try expect(older.dictionary["intercept"] == nil, "unset click capture is omitted")
+        // A server that never answers is abandoned within the budget rather than left to URLSession's timeouts.
+        let stalled = URLSessionConfiguration.ephemeral; stalled.protocolClasses = [StalledRPC.self]
+        let slow = TransmissionClient(settings: settings, password: nil, session: URLSession(configuration: stalled))
+        slow.budget = 0.3
+        let began = Date()
+        do { _ = try await slow.rpc("session-get"); throw ExtensionFailure("Unexpected success") }
+        catch { try expect(error.localizedDescription.contains("did not answer") && Date().timeIntervalSince(began) < 5, "time budget enforced") }
         for directory in ["/downloads/test", "C:\\Downloads", ""] { try ServerSettings.validateDirectory(directory) }
         do { try ServerSettings.validateDirectory("relative/path"); throw ExtensionFailure("Unexpected success") }
         catch { try expect(!error.localizedDescription.contains("Unexpected success"), "relative server path rejected") }
@@ -107,6 +144,6 @@ func body(_ request: URLRequest) throws -> [String: Any] {
         settings.host = "::1"
         let endpoint = try settings.endpoint
         try expect(endpoint.absoluteString == "http://[::1]:9091/transmission/rpc", "IPv6 endpoint")
-        print("PASS: native RPC handshake, add, duplicate, directory, auth, errors, bounded retry, validation, IPv6")
+        print("PASS: native RPC handshake, add, duplicate, directory, auth, errors, bounded retry, time budget, validation, settings decoding, IPv6")
     }
 }

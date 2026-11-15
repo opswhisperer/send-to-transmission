@@ -1,17 +1,40 @@
 /* Shared validation is also exercised by the Node tests. */
 (function (root) {
+  function webURL(value) {
+    try {
+      const url = new URL(value);
+      return ['http:', 'https:'].includes(url.protocol) && url.hostname && !url.username && !url.password ? url : null;
+    } catch { return null; }
+  }
   function validateLink(value) {
     const link = String(value || '').trim();
     if (link.length > 65536) throw new Error('This link is too long.');
     let url;
     try { url = new URL(link); } catch { throw new Error('Enter a magnet link or an HTTP(S) torrent URL.'); }
     if (url.protocol === 'magnet:') {
-      if (!url.searchParams.getAll('xt').some(x => /^urn:(btih|btmh):.+$/i.test(x)))
+      const parameters = [...url.searchParams];
+      // Multi-torrent magnets number their topics (xt.1, xt.2); a magnet with no hash may still name its
+      // .torrent file in xs, which the native handler sends instead.
+      if (!parameters.some(([key, x]) => /^xt(\.\d+)?$/.test(key) && /^urn:(btih|btmh):.+$/i.test(x)) &&
+          !parameters.some(([key, x]) => key === 'xs' && webURL(x)))
         throw new Error('The magnet link is missing its torrent identifier.');
-    } else if (!['http:', 'https:'].includes(url.protocol) || !url.hostname || url.username || url.password) {
+    } else if (!webURL(link)) {
       throw new Error('Use a magnet link or an HTTP(S) torrent URL without embedded login details.');
     }
     return link;
+  }
+  // Addresses that only make sense inside someone's own network. Names that resolve to private
+  // addresses cannot be recognized here.
+  function privateHost(hostname) {
+    const host = String(hostname).toLowerCase().replace(/^\[|\]$/g, '').replace(/\.$/, '');
+    if (host.includes(':')) return /^(::1?$|::ffff:|f[cd]|fe[89ab])/.test(host);
+    const v4 = host.match(/^(\d+)\.(\d+)\.\d+\.\d+$/);
+    if (v4) {
+      const a = Number(v4[1]), b = Number(v4[2]);
+      return a === 0 || a === 10 || a === 127 || (a === 100 && b >= 64 && b <= 127) || (a === 169 && b === 254) ||
+        (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168);
+    }
+    return !host.includes('.') || /\.(local|localhost|internal|lan|home|home\.arpa)$/.test(host);
   }
   function recognizedLink(value) {
     try {
@@ -35,16 +58,17 @@
   }
   function requestNative(browser, payload) {
     return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error('The extension did not respond. Rebuild and run it in Xcode, then reopen the Safari popup.')), 45000);
+      // The native handler gives up on Transmission after 40 seconds, so its own answer arrives first.
+      const timer = setTimeout(() => reject(new Error('The extension’s helper did not respond. Quit and reopen Safari; if this continues, reinstall Send to Transmission.')), 45000);
       try {
         // Use Safari's documented callback API; never assume a missing reply is success.
         browser.runtime.sendNativeMessage('application.id', payload, reply => {
           clearTimeout(timer);
           const error = browser.runtime.lastError;
           if (error) return reject(new Error(error.message || 'Native messaging failed.'));
-          if (!reply?.ok) return reject(new Error(reply?.error || 'No response from the native extension. Rebuild and run it in Xcode, then reopen the popup.'));
+          if (!reply?.ok) return reject(new Error(reply?.error || 'No response from the extension’s helper. Quit and reopen Safari; if this continues, reinstall Send to Transmission.'));
           if (['getSettings', 'saveSettings'].includes(payload.action) && !reply.settings)
-            return reject(new Error('The native extension returned incomplete settings. Rebuild and run the latest version.'));
+            return reject(new Error('The extension’s helper returned incomplete settings. Quit and reopen Safari so the current version loads.'));
           resolve(reply);
         });
       } catch (error) { clearTimeout(timer); reject(error); }
@@ -92,7 +116,7 @@ async function fetchTorrent(link) {
     throw error;
   } finally { clearTimeout(timeout); }
 }
-  const api = { validateLink, recognizedLink, normalizeServer, requestNative, fetchTorrent };
+  const api = { validateLink, recognizedLink, privateHost, normalizeServer, requestNative, fetchTorrent };
   root.TransmissionCore = api;
   if (typeof module !== 'undefined') module.exports = api;
 })(globalThis);
