@@ -48,6 +48,11 @@ class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHan
         self.webView.configuration.userContentController.add(self, name: "controller")
 
         self.webView.loadFileURL(Bundle.main.url(forResource: "Main", withExtension: "html")!, allowingReadAccessTo: Bundle.main.resourceURL!)
+
+        // The magnet link app is changed outside this app (scripts/magnet-handler.sh), so look again on return.
+        NotificationCenter.default.addObserver(forName: NSApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.page("handler", self?.handlerState() ?? [:]) }
+        }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -71,14 +76,6 @@ class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHan
             SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier) { error in
                 DispatchQueue.main.async {
                     NSApplication.shared.terminate(nil)
-                }
-            }
-        case "make-default":
-            NSWorkspace.shared.setDefaultApplication(at: Bundle.main.bundleURL, toOpenURLsWithScheme: "magnet") { error in
-                DispatchQueue.main.async {
-                    var state = self.handlerState()
-                    if let error { state["error"] = error.localizedDescription }
-                    self.page("handler", state)
                 }
             }
         case "send":

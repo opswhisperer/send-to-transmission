@@ -34,3 +34,4 @@ ditto "$PRODUCTS/$APP" "$DEST/$APP"
 
 echo "Built $DEST/$APP"
 echo "Open it once, then enable Send to Transmission in Safari → Settings → Extensions."
+echo "To open magnet links from any app with it: scripts/magnet-handler.sh --set \"$DEST/$APP\""

@@ -22,13 +22,16 @@ const events = {
         document.body.classList.toggle('state-on', enabled === true);
         document.body.classList.toggle('state-off', enabled === false);
     },
-    handler({ isDefault, current, error }) {
-        $('handlerText').textContent = error ? 'Could not change the magnet link app: ' + error
-            : isDefault ? 'Magnet links clicked anywhere on this Mac open in Send to Transmission.'
+    handler({ isDefault, current }) {
+        if (isDefault === undefined) return;
+        $('handlerText').textContent = isDefault ? 'Magnet links clicked anywhere on this Mac open in Send to Transmission.'
             : current ? 'Magnet links currently open in ' + current + '.'
             : 'No app is set to open magnet links.';
-        $('handlerText').classList.toggle('error', !!error);
-        $('makeDefault').hidden = isDefault;
+        // macOS refuses a sandboxed app's request to change this, so it is done from Terminal.
+        $('handlerHint').textContent = isDefault
+            ? 'That includes links from private windows, other browsers and other apps.'
+            : 'To send them here instead, including links from private windows, other browsers and other apps, run this in Terminal from the source folder:';
+        $('handlerCommand').hidden = isDefault;
     },
     begin({ name, remaining }) {
         document.body.classList.add('sending');
@@ -71,5 +74,4 @@ $('review').addEventListener('submit', event => {
     post('send', { directory: $('directory').value.trim(), paused: $('paused').checked, remember: $('remember').checked });
 });
 for (const id of ['cancel', 'retry', 'skip', 'done']) $(id).addEventListener('click', () => post(id));
-$('makeDefault').addEventListener('click', () => post('make-default'));
 document.querySelector('button.open-preferences').addEventListener('click', () => post('open-preferences'));

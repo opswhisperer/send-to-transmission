@@ -82,6 +82,7 @@ To change teams, rerun `scripts/configure.sh --force …` instead.
 2. `scripts/configure.sh --bundle-prefix com.yourname`.
 3. `bash scripts/build.sh /Applications`, or Run in Xcode. Automatic signing registers the bundle IDs and creates provisioning profiles on the first build.
 4. Open the app once and enable the extension in Safari → Settings → Extensions.
+5. Optional: `scripts/magnet-handler.sh --set` makes the installed app open magnet links from every app on your Mac. Without `--set` it reports which app does now. This is a script because macOS refuses the request from a sandboxed app, so the app cannot offer it as a button.
 
 Bundle IDs are unique across all Apple developer accounts. If a prefix belongs to another team, signing fails with "No profiles for … were found" or "… is not available"; choose a prefix you own.
 

@@ -122,6 +122,15 @@ button {
     font-size: 1em;
 }
 
+code {
+    font: 0.9em ui-monospace, Menlo, monospace;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    cursor: text;
+    -webkit-user-select: text;
+}
+
 #status {
     white-space: pre-wrap;
     overflow-wrap: anywhere;

@@ -25,9 +25,10 @@ Full instructions are in [docs/BUILDING.md](docs/BUILDING.md). The short version
 ```sh
 scripts/configure.sh --bundle-prefix com.yourname   # finds the team from your Apple Development certificate
 bash scripts/build.sh /Applications                # or omit to build into the repo folder
+scripts/magnet-handler.sh --set                    # optional: open magnet links from any app with it
 ```
 
-Open **Send to Transmission.app** once, then enable **Send to Transmission** in Safari → Settings → Extensions, and grant website access for sites where you want link capture to work. To catch magnet links outside Safari, choose **Open magnet links with Send to Transmission** in the app.
+Open **Send to Transmission.app** once, then enable **Send to Transmission** in Safari → Settings → Extensions, and grant website access for sites where you want link capture to work.
 
 ## Configure
 
@@ -50,7 +51,7 @@ HTTPS uses normal macOS trust evaluation: a self-signed certificate must be trus
 - **Right-click** a link → **Send to Transmission**. The send page always opens so you can review the directory and paused options. For same-site torrent links, the extension fetches the torrent with your Safari session, so the URL doesn't need a `.torrent` suffix. It sends the torrent contents, not your cookies, to Transmission. Redirects, cross-origin links, responses without torrent or generic binary headers, and files over 2 MB are rejected. Website access and a page reload are required.
 - **Paste** a magnet or HTTP(S) torrent URL into the toolbar popup. Transmission fetches pasted URLs itself, without Safari's website login.
 - **Click capture** (optional) handles magnet links and links whose path ends in `.torrent`, have a torrent `download` attribute, or carry a `.torrent` filename in a `file`, `filename`, or `download` query parameter. A link on the same website that describes itself as a torrent download is also tried: it is fetched with your Safari session and sent if the reply really is a torrent, otherwise the click proceeds as usual. A `.torrent` link from another website to an address on a private network always opens the send page first. Modified clicks (⌘, ⇧, ⌥, ⌃) keep their normal behavior. Check **Don't show this page again** on the send page to send captured clicks immediately with your saved defaults.
-- **Everywhere else**, the app handles it. A content script only runs where Safari allows it, and never sees links opened by page scripts, private windows without permission, or other apps; those go to whichever app macOS has registered for `magnet:`. Open the app and choose **Open magnet links with Send to Transmission** to make it that app. It also opens `.torrent` files from the Finder's Open With menu, and uses the server and defaults saved in the extension.
+- **Everywhere else**, the app handles it. A content script only runs where Safari allows it, and never sees links opened by page scripts, private windows without permission, or other apps; those go to whichever app macOS has registered for `magnet:`. Run `scripts/magnet-handler.sh --set` to make Send to Transmission that app; macOS refuses the request from a sandboxed app, so the app can only show which app has the role now. It also opens `.torrent` files from the Finder's Open With menu, and uses the server and defaults saved in the extension.
 
 Download directories are absolute paths **on the server**. Leave the field empty to use Transmission's default. This is not a Mac folder picker; Transmission RPC has no server filesystem browser. Up to ten successful directories are remembered. Adding a duplicate torrent never moves the existing one.
 
@@ -79,7 +80,7 @@ Source layout:
 - `Extension/`: manifest, background routing, click capture, popup/settings UI, and icons.
 - `macOS/Send to Transmission/`: Xcode project; the app (extension status, magnet / `.torrent` handler); `Shared/TransmissionService.swift`, the RPC client, settings and Keychain code compiled into both the app and the extension.
 - `Config/`: shared build settings (`Base.xcconfig`) and your gitignored signing overlay.
-- `scripts/`: configure, build, test, and icon generation.
+- `scripts/`: configure, build, set the magnet link app, test, and icon generation.
 - `tests/`: Swift transport tests, JavaScript validation, and mock browser UI checks.
 - `docs/`: [building from source](docs/BUILDING.md) and [releasing](docs/RELEASING.md).
 
